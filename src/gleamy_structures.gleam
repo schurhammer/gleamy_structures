@@ -1,12 +1,26 @@
 import gleam/io
 import gleam/int
 import gleam/list
-import binary_search_tree as tree
+import red_black_tree as tree
 
 pub fn main() {
-  list.range(1, 100)
-  |> list.shuffle()
-  |> list.fold(tree.new(int.compare), tree.insert)
-  |> tree.draw(int.to_string)
-  |> io.println()
+  let add_items =
+    list.range(1, 1_000_000)
+    |> list.shuffle()
+  let remove_items =
+    list.range(1, 1_000_000)
+    |> list.shuffle()
+
+  let before = timestamp(1000)
+
+  tree.new(int.compare)
+  |> list.fold(add_items, _, tree.insert)
+  |> list.fold(remove_items, _, tree.delete)
+
+  let after = timestamp(1000)
+
+  io.debug(after - before)
 }
+
+external fn timestamp(unit: Int) -> Int =
+  "erlang" "monotonic_time"
