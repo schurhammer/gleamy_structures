@@ -1,10 +1,10 @@
 import gleam/io
 import gleam/int
 import gleam/list
-import red_black_tree
-import binary_search_tree
-import pairing_heap
-import leftist_heap
+import impl/red_black_tree
+import impl/binary_search_tree
+import impl/pairing_heap
+import impl/leftist_heap
 
 type Dataset(a) {
   Dataset(label: String, data: a)
@@ -125,5 +125,12 @@ pub fn main() {
   |> list.map(list.map(_, io.println))
 }
 
-external fn timestamp(unit: Int) -> Int =
-  "erlang" "monotonic_time"
+if erlang {
+  external fn timestamp(unit: Int) -> Int =
+    "erlang" "monotonic_time"
+}
+
+if javascript {
+  external fn timestamp(unit: Int) -> Int =
+    "" "(x => globalThis.performance.now() * (x / 1000))"
+}

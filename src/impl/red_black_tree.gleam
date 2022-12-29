@@ -107,7 +107,7 @@ fn del(node, x, compare) {
         Gt -> rotate(c, a, y, del(b, x, compare))
         Eq ->
           case min_del(b) {
-            Some(y1, b1) -> rotate(c, a, y1, b1)
+            Min(y1, b1) -> rotate(c, a, y1, b1)
             None -> E
           }
       }
@@ -142,18 +142,18 @@ fn rotate(c: Color, l: Node(a), v: a, r: Node(a)) -> Node(a) {
 }
 
 type MinDel(a) {
-  Some(a, Node(a))
+  Min(a, Node(a))
   None
 }
 
 fn min_del(node) -> MinDel(a) {
   case node {
-    T(R, E, x, E) -> Some(x, E)
-    T(B, E, x, E) -> Some(x, EE)
-    T(B, E, x, T(R, E, y, E)) -> Some(x, T(B, E, y, E))
+    T(R, E, x, E) -> Min(x, E)
+    T(B, E, x, E) -> Min(x, EE)
+    T(B, E, x, T(R, E, y, E)) -> Min(x, T(B, E, y, E))
     T(c, a, x, b) ->
       case min_del(a) {
-        Some(x1, a1) -> Some(x1, rotate(c, a1, x, b))
+        Min(x1, a1) -> Min(x1, rotate(c, a1, x, b))
         None -> None
       }
     _ -> None
