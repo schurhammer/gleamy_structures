@@ -22,11 +22,23 @@ pub fn new(compare: fn(a, a) -> Order) -> Tree(a) {
   Tree(E, compare)
 }
 
+pub fn clear(tree: Tree(a)) -> Tree(a) {
+  Tree(E, tree.compare)
+}
+
 pub fn insert(tree: Tree(a), key: a) -> Tree(a) {
   Tree(blacken(ins(tree.root, key, tree.compare)), tree.compare)
 }
 
 pub fn delete(tree: Tree(a), key: a) -> Tree(a) {
+  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
+}
+
+pub fn delete_matching(tree: Tree(a), key: a) -> Tree(a) {
+  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
+}
+
+pub fn delete_match(tree: Tree(a), key: a) -> Tree(a) {
   Tree(del(redden(tree.root), key, tree.compare), tree.compare)
 }
 

@@ -13,6 +13,10 @@ pub fn new(compare: fn(a, a) -> Order) -> Tree(a) {
   Tree(Empty, compare)
 }
 
+pub fn clear(tree: Tree(a)) -> Tree(a) {
+  Tree(Empty, tree.compare)
+}
+
 pub fn insert(tree: Tree(a), key: a) -> Tree(a) {
   Tree(do_insert(tree.root, key, tree.compare), tree.compare)
 }
