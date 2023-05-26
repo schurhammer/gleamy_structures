@@ -1,8 +1,6 @@
 // Based on "Deletion: The curse of the red-black tree" by Germane (2014)
 
 import gleam/order.{Eq, Gt, Lt, Order}
-import gleam/io
-import gleam/string
 
 type Color {
   R
