@@ -1,86 +1,85 @@
-import gleam/option.{Option}
-import gleam/order
+import gleam/order.{Order}
 import gleam/list
-import structures/red_black_tree as tree
+import structures/red_black_tree_kv as tree
 
-type Map(a, b) =
-  tree.Tree(#(a, b))
+type Map(k, v) =
+  tree.Tree(k, v)
 
-// TODO need a new tree structure designed to compare only keys
-// old structure just compares the whole value
-
-pub fn delete(from map: Map(a, b), delete key: a) -> Map(a, b) {
-  todo
+pub fn new(compare: fn(k, k) -> Order) -> Map(k, v) {
+  tree.new(compare)
 }
 
-pub fn drop(from map: Map(a, b), drop disallowed_keys: List(a)) -> Map(a, b) {
-  todo
+pub fn insert(into map: Map(k, v), key key: k, value value: v) -> Map(k, v) {
+  tree.insert(map, key, value)
 }
 
-pub fn filter(in map: Map(a, b), for property: fn(a, b) -> Bool) -> Map(a, b) {
-  todo
+pub fn find(in map: Map(k, v), key key: k) -> Result(#(k, v), Nil) {
+  tree.find(map, key)
+}
+
+pub fn has_key(in map: Map(k, v), key key: k) -> Bool {
+  case tree.find(map, key) {
+    Ok(_) -> True
+    Error(_) -> False
+  }
+}
+
+pub fn delete(from map: Map(k, v), this key: k) -> Map(k, v) {
+  tree.delete(map, key)
+}
+
+pub fn count(map: Map(k, v)) -> Int {
+  tree.fold(map, 0, fn(a, _, _) { a + 1 })
 }
 
 pub fn fold(
-  over map: Map(a, b),
-  from initial: c,
-  with fun: fn(c, a, b) -> c,
-) -> c {
-  todo
+  over map: Map(k, v),
+  from initial: a,
+  with reducer: fn(a, k, v) -> a,
+) -> a {
+  tree.fold(map, initial, reducer)
 }
 
-pub fn from_list(list: List(#(a, b))) -> Map(a, b) {
-  todo
+pub fn filter(in map: Map(k, v), for property: fn(k, v) -> Bool) -> Map(k, v) {
+  tree.fold(
+    map,
+    map,
+    fn(map, k, v) {
+      case property(k, v) {
+        True -> map
+        False -> tree.delete(map, k)
+      }
+    },
+  )
 }
 
-pub fn get(from: Map(a, b), get: a) -> Result(b, Nil) {
-  todo
+pub fn merge(this first: Map(k, v), and second: Map(k, v)) -> Map(k, v) {
+  tree.fold(first, second, fn(a, k, v) { tree.insert(a, k, v) })
 }
 
-pub fn has_key(map: Map(a, b), key: a) -> Bool {
-  todo
+// return the map keeping only keys in the list
+pub fn take(from map: Map(k, v), keeping desired: List(k)) -> Map(k, v) {
+  case desired {
+    [x, ..xs] ->
+      case tree.find(map, x) {
+        Ok(x) -> tree.insert(take(map, xs), x.0, x.1)
+        Error(_) -> take(map, xs)
+      }
+    [] -> tree.clear(map)
+  }
 }
 
-pub fn insert(into map: Map(a, b), for key: a, insert value: b) -> Map(a, b) {
-  todo
+pub fn from_list(
+  members: List(#(k, v)),
+  compare: fn(k, k) -> Order,
+) -> Map(k, v) {
+  list.fold(
+    members,
+    tree.new(compare),
+    fn(tree, i) { tree.insert(tree, i.0, i.1) },
+  )
 }
 
-pub fn keys(map: Map(a, b)) -> List(a) {
-  todo
-}
-
-pub fn map_values(in map: Map(a, b), with fun: fn(a, b) -> c) -> Map(a, c) {
-  todo
-}
-
-pub fn merge(into map: Map(a, b), from new_entries: Map(a, b)) -> Map(a, b) {
-  todo
-}
-
-pub fn new() -> Map(a, b) {
-  todo
-}
-
-pub fn count(map: Map(a, b)) -> Int {
-  todo
-}
-
-pub fn take(from map: Map(a, b), keeping desired_keys: List(a)) -> Map(a, b) {
-  todo
-}
-
-pub fn to_list(map: Map(a, b)) -> List(#(a, b)) {
-  todo
-}
-
-pub fn update(
-  in map: Map(a, b),
-  update key: a,
-  with fun: fn(Option(b)) -> b,
-) -> Map(a, b) {
-  todo
-}
-
-pub fn values(map: Map(a, b)) -> List(b) {
-  todo
+pub fn to_list(map: Map(k, v)) -> List(#(k, v)) {
+  tree.foldr(map, [], fn(a, k, v) { [#(k, v), ..a] })
 }

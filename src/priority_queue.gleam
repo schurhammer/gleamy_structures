@@ -11,8 +11,8 @@ pub fn from_list(list: List(a), compare: fn(a, a) -> Order) -> Queue(a) {
 
 pub fn is_empty(queue: Queue(a)) -> Bool {
   case heap.find_min(queue) {
-    Ok(_) -> True
-    Error(_) -> False
+    Ok(_) -> False
+    Error(_) -> True
   }
 }
 

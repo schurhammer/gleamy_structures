@@ -1,6 +1,8 @@
 // Based on "Deletion: The curse of the red-black tree" by Germane (2014)
 
 import gleam/order.{Eq, Gt, Lt, Order}
+import gleam/io
+import gleam/string
 
 type Color {
   R
@@ -34,20 +36,16 @@ pub fn delete(tree: Tree(a), key: a) -> Tree(a) {
   Tree(del(redden(tree.root), key, tree.compare), tree.compare)
 }
 
-pub fn delete_matching(tree: Tree(a), key: a) -> Tree(a) {
-  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
-}
-
-pub fn delete_match(tree: Tree(a), key: a) -> Tree(a) {
-  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
-}
-
 pub fn find(tree: Tree(a), key: a) -> Result(a, Nil) {
   do_find(tree.root, key, tree.compare)
 }
 
 pub fn fold(tree: Tree(a), acc: b, fun: fn(b, a) -> b) -> b {
   do_fold(tree.root, acc, fun)
+}
+
+pub fn foldr(tree: Tree(a), acc: b, fun: fn(b, a) -> b) -> b {
+  do_foldr(tree.root, acc, fun)
 }
 
 pub fn draw(tree: Tree(a), to_string: fn(a) -> String) {
@@ -190,6 +188,18 @@ fn do_fold(node, acc, fun) {
       let acc = do_fold(r, acc, fun)
       let acc = fun(acc, v)
       let acc = do_fold(l, acc, fun)
+      acc
+    }
+    _ -> acc
+  }
+}
+
+fn do_foldr(node, acc, fun) {
+  case node {
+    T(_, r, v, l) -> {
+      let acc = do_foldr(l, acc, fun)
+      let acc = fun(acc, v)
+      let acc = do_foldr(r, acc, fun)
       acc
     }
     _ -> acc
