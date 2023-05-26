@@ -1,7 +1,7 @@
 import gleeunit/should
 import gleam/string
 import gleam/list
-import gleamy/structures/map
+import gleamy_structures/map
 
 pub fn insert_and_find_test() {
   let map = map.new(string.compare)

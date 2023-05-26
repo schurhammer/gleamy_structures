@@ -1,6 +1,6 @@
 import gleeunit/should
 import gleam/int
-import gleamy/structures/set
+import gleamy_structures/set
 
 pub fn contains_test() {
   let set = set.new(int.compare)
