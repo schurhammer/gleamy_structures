@@ -1,6 +1,6 @@
 import gleam/order.{Order}
 import gleam/list
-import structures/red_black_tree_kv as tree
+import gleamy/structures/tree/red_black_tree_kv as tree
 
 type Map(k, v) =
   tree.Tree(k, v)

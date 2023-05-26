@@ -2,7 +2,7 @@ import gleam/order.{Order}
 import gleam/list
 import gleam/io
 import gleam/string
-import structures/red_black_tree as tree
+import gleamy/structures/tree/red_black_tree as tree
 
 type Set(a) =
   tree.Tree(a)

@@ -1,6 +1,6 @@
 import gleam/order.{Order}
 import gleam/list
-import structures/pairing_heap as heap
+import gleamy/structures/heap/pairing_heap as heap
 
 type Queue(a) =
   heap.Heap(a)

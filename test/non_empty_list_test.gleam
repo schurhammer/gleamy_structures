@@ -1,5 +1,5 @@
 import gleeunit/should
-import non_empty_list
+import gleamy/structures/non_empty_list
 
 pub fn fold_test() {
   let list = non_empty_list.End(1)
