@@ -4,7 +4,7 @@ import gleam/io
 import gleam/string
 import gleamy_structures/tree/red_black_tree as tree
 
-type Set(a) =
+pub type Set(a) =
   tree.Tree(a)
 
 pub fn contains(in set: Set(a), this member: a) -> Bool {

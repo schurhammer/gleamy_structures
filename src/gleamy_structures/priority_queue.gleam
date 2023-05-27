@@ -2,7 +2,7 @@ import gleam/order.{Order}
 import gleam/list
 import gleamy_structures/heap/pairing_heap as heap
 
-type Queue(a) =
+pub type Queue(a) =
   heap.Heap(a)
 
 pub fn from_list(list: List(a), compare: fn(a, a) -> Order) -> Queue(a) {

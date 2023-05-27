@@ -2,7 +2,7 @@ import gleam/order.{Order}
 import gleam/list
 import gleamy_structures/tree/red_black_tree_kv as tree
 
-type Map(k, v) =
+pub type Map(k, v) =
   tree.Tree(k, v)
 
 pub fn new(compare: fn(k, k) -> Order) -> Map(k, v) {
