@@ -1,7 +1,5 @@
 import gleam/order.{Order}
 import gleam/list
-import gleam/io
-import gleam/string
 import gleamy_structures/tree/red_black_tree as tree
 
 pub type Set(a) =
@@ -76,14 +74,7 @@ pub fn take(from set: Set(a), keeping desired: List(a)) -> Set(a) {
 }
 
 pub fn to_list(set: Set(a)) -> List(a) {
-  tree.foldr(
-    set,
-    [],
-    fn(a, i) {
-      io.println(string.inspect(i))
-      [i, ..a]
-    },
-  )
+  tree.foldr(set, [], fn(a, i) { [i, ..a] })
 }
 
 pub fn union(of first: Set(a), and second: Set(a)) -> Set(a) {
