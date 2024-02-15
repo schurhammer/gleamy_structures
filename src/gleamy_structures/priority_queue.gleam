@@ -1,4 +1,4 @@
-import gleam/order.{Order}
+import gleam/order.{type Order}
 import gleam/list
 import gleamy_structures/heap/pairing_heap as heap
 

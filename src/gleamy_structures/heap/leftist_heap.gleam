@@ -1,6 +1,6 @@
 // Based on "Purely Functional Data Structures" by Okasaki (1998)
 
-import gleam/order.{Gt, Order}
+import gleam/order.{type Order, Gt}
 
 type T(a) {
   E

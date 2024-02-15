@@ -9,7 +9,7 @@ repository = { type = "github", user = "schurhammer", repo = "gleamy_structures"
 links = [{ title = "Website", href = "https://github.com/schurhammer/gleamy_structures" }]
 
 [dependencies]
-gleam_stdlib = "~> 0.29"
+gleam_stdlib = "~> 0.34"
 
 [dev-dependencies]
-gleeunit = "~> 0.10"
+gleeunit = "~> 1.0"

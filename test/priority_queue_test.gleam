@@ -78,7 +78,7 @@ pub fn reorder_test() {
   |> should.equal([1, 1, 3, 4, 5])
 
   let reverse_queue =
-    queue.reorder(queue, fn(a, b) { order.reverse(int.compare(a, b)) })
+    queue.reorder(queue, fn(a, b) { order.reverse(int.compare)(a, b) })
 
   queue.to_list(reverse_queue)
   |> should.equal([5, 4, 3, 1, 1])

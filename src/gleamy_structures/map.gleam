@@ -1,4 +1,4 @@
-import gleam/order.{Order}
+import gleam/order.{type Order}
 import gleam/list
 import gleamy_structures/tree/red_black_tree_kv as tree
 
@@ -41,16 +41,12 @@ pub fn fold(
 }
 
 pub fn filter(in map: Map(k, v), for property: fn(k, v) -> Bool) -> Map(k, v) {
-  tree.fold(
-    map,
-    map,
-    fn(map, k, v) {
-      case property(k, v) {
-        True -> map
-        False -> tree.delete(map, k)
-      }
-    },
-  )
+  tree.fold(map, map, fn(map, k, v) {
+    case property(k, v) {
+      True -> map
+      False -> tree.delete(map, k)
+    }
+  })
 }
 
 pub fn merge(this first: Map(k, v), and second: Map(k, v)) -> Map(k, v) {
@@ -73,11 +69,9 @@ pub fn from_list(
   members: List(#(k, v)),
   compare: fn(k, k) -> Order,
 ) -> Map(k, v) {
-  list.fold(
-    members,
-    tree.new(compare),
-    fn(tree, i) { tree.insert(tree, i.0, i.1) },
-  )
+  list.fold(members, tree.new(compare), fn(tree, i) {
+    tree.insert(tree, i.0, i.1)
+  })
 }
 
 pub fn to_list(map: Map(k, v)) -> List(#(k, v)) {

@@ -1,4 +1,4 @@
-import gleam/order.{Order}
+import gleam/order.{type Order}
 import gleam/list
 import gleamy_structures/tree/red_black_tree as tree
 
@@ -17,16 +17,12 @@ pub fn delete(from set: Set(a), this member: a) -> Set(a) {
 }
 
 pub fn filter(in set: Set(a), for property: fn(a) -> Bool) -> Set(a) {
-  tree.fold(
-    set,
-    set,
-    fn(set, i) {
-      case property(i) {
-        True -> set
-        False -> tree.delete(set, i)
-      }
-    },
-  )
+  tree.fold(set, set, fn(set, i) {
+    case property(i) {
+      True -> set
+      False -> tree.delete(set, i)
+    }
+  })
 }
 
 pub fn fold(over set: Set(a), from initial: b, with reducer: fn(b, a) -> b) -> b {
@@ -42,16 +38,12 @@ pub fn insert(into set: Set(a), this member: a) -> Set(a) {
 }
 
 pub fn intersection(of first: Set(a), and second: Set(a)) -> Set(a) {
-  tree.fold(
-    second,
-    tree.clear(first),
-    fn(a, i) {
-      case tree.find(first, i) {
-        Ok(_) -> tree.insert(a, i)
-        Error(_) -> a
-      }
-    },
-  )
+  tree.fold(second, tree.clear(first), fn(a, i) {
+    case tree.find(first, i) {
+      Ok(_) -> tree.insert(a, i)
+      Error(_) -> a
+    }
+  })
 }
 
 pub fn new(compare: fn(a, a) -> Order) -> Set(a) {

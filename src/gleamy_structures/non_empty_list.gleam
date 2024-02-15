@@ -30,16 +30,12 @@ pub fn map(list: NonEmptyList(a), transform: fn(a) -> b) -> NonEmptyList(b) {
 }
 
 pub fn filter(list: NonEmptyList(a), predicate: fn(a) -> Bool) -> List(a) {
-  fold(
-    list,
-    [],
-    fn(acc, item) {
-      case predicate(item) {
-        True -> [item, ..acc]
-        False -> acc
-      }
-    },
-  )
+  fold(list, [], fn(acc, item) {
+    case predicate(item) {
+      True -> [item, ..acc]
+      False -> acc
+    }
+  })
   |> list.reverse()
 }
 
