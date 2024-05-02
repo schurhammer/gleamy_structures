@@ -1,15 +1,15 @@
 name = "gleamy_structures"
-version = "0.4.0"
+version = "0.5.0"
 
 # Fill out these fields if you intend to generate HTML documentation or publish
 # your project to the Hex package manager.
 licences = ["Apache-2.0"]
-description = "Data structures in pure Gleam."
+description = "Data structures in pure Gleam including tree, heap, non empty list, and priority queue."
 repository = { type = "github", user = "schurhammer", repo = "gleamy_structures" }
 links = [{ title = "Website", href = "https://github.com/schurhammer/gleamy_structures" }]
 
 [dependencies]
-gleam_stdlib = "~> 0.34"
+gleam_stdlib = "~> 0.37 or ~> 1.0"
 
 [dev-dependencies]
 gleeunit = "~> 1.0"
