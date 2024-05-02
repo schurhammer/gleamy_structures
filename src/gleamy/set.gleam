@@ -1,6 +1,6 @@
 import gleam/list
 import gleam/order.{type Order}
-import gleamy_structures/tree/red_black_tree as tree
+import gleamy/red_black_tree_set as tree
 
 pub type Set(a) =
   tree.Tree(a)

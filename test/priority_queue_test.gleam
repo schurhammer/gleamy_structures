@@ -1,6 +1,6 @@
 import gleam/int
 import gleam/order
-import gleamy_structures/priority_queue as queue
+import gleamy/priority_queue as queue
 import gleeunit/should
 
 pub fn from_list_test() {

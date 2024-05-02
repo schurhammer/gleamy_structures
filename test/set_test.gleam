@@ -1,5 +1,5 @@
 import gleam/int
-import gleamy_structures/set
+import gleamy/set
 import gleeunit/should
 
 pub fn contains_test() {

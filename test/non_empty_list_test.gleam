@@ -1,4 +1,4 @@
-import gleamy_structures/non_empty_list
+import gleamy/non_empty_list
 import gleeunit/should
 
 pub fn fold_test() {

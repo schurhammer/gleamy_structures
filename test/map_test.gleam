@@ -1,6 +1,6 @@
 import gleam/list
 import gleam/string
-import gleamy_structures/map
+import gleamy/map
 import gleeunit/should
 
 pub fn insert_and_find_test() {
