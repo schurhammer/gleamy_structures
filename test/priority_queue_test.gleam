@@ -1,7 +1,7 @@
-import gleeunit/should
 import gleam/int
 import gleam/order
 import gleamy_structures/priority_queue as queue
+import gleeunit/should
 
 pub fn from_list_test() {
   let queue = queue.from_list([3, 1, 4, 1, 5], int.compare)
