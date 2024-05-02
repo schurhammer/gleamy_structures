@@ -5,17 +5,72 @@
 
 Data structures in pure Gleam.
 
-## Quick start
+## Supported Structures
 
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
-```
+### Priority Queue
+
+
+`gleamy/priority_queue`:
+
+This priority queue is a wrapper around `gleamy/pairing_heap` ,providing additional functionality. The priority is comparison based in ascending order (lowest priority first).
+
+
+### Heap
+
+These heaps are min-heaps, providing efficient access to the minimum value based on a given comparison function.
+
+
+`gleamy/pairing_heap`:
+
+This is the recommended heap structure for most use cases. However, for some non-linear use cases the performance can degrade because of the amortized nature of this structure.
+
+
+`gleamy/leftist_heap`:
+
+This heap structure has consistent performance across all use cases.
+
+
+### Non-Empty List
+
+
+`gleamy/non_empty_list`:
+
+Non-Empty list is a list structure that always contains at least one item.
+
+
+### Map
+
+Maps are used for key-value lookups. Keys are compared with a user-provided comparison function.
+
+
+`gleamy/map`:
+
+This is a wrapper around `red_black_tree_map` providing additional utility functions.
+
+
+`gleamy/red_black_tree_map`:
+
+A map based on a red-black balanced tree structure.
+
+
+### Set
+
+Sets are used to store a collection of items. Items are compared with a user-provided comparison function to remove duplicate values.
+
+
+`gleamy/set`:
+
+This is a wrapper around `red_black_tree_set` providing additional utility functions. 
+
+
+`gleamy/red_black_tree_map`:
+
+A set based on a red-black balanced tree structure.
+
 
 ## Installation
 
-If available on Hex this package can be added to your Gleam project:
+This package can be added to your Gleam project:
 
 ```sh
 gleam add gleamy_structures
@@ -24,4 +79,4 @@ gleam add gleamy_structures
 and its documentation can be found at <https://hexdocs.pm/gleamy_structures>.
 
 ## Contributions Welcome
-Feel free to make PRs, issues, or requests for new data structures and functions :) Especially welcome would be more rigorous tests and reviews of the implementation compared to source materials.
+Feel free to make PRs, issues, or requests for new data structures and functions :)

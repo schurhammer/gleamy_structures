@@ -46,10 +46,6 @@ pub fn foldr(tree: Tree(k, v), acc: b, fun: fn(b, k, v) -> b) -> b {
   do_foldr(tree.root, acc, fun)
 }
 
-pub fn draw(tree: Tree(k, v), to_string: fn(k, v) -> String) -> String {
-  do_draw(tree.root, 0, to_string)
-}
-
 fn ins(node: Node(k, v), x: #(k, v), compare: fn(k, k) -> Order) -> Node(k, v) {
   case node {
     E -> T(R, E, x, E)
@@ -212,21 +208,5 @@ fn do_indent(acc: String, i: Int) -> String {
   case i {
     0 -> acc
     i -> do_indent(".  " <> acc, i - 1)
-  }
-}
-
-fn do_draw(
-  node: Node(k, v),
-  indent: Int,
-  to_string: fn(k, v) -> String,
-) -> String {
-  case node {
-    T(_, l, k, r) -> {
-      let ls = do_draw(l, indent + 1, to_string)
-      let ks = do_indent(to_string(k.0, k.1) <> "\n", indent)
-      let rs = do_draw(r, indent + 1, to_string)
-      ls <> ks <> rs
-    }
-    _ -> ""
   }
 }
