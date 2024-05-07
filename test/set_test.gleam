@@ -262,3 +262,42 @@ pub fn insert_and_remove_test() {
   |> set.to_list()
   |> should.equal([1, 5, 7, 8, 11, 12, 13])
 }
+
+pub fn difference_test() {
+  let set = set.new(int.compare)
+  let remove_set = set.new(int.compare)
+
+  let from_set =
+    set
+    |> set.insert(1)
+    |> set.insert(2)
+    |> set.insert(3)
+    |> set.insert(4)
+
+  let remove_set =
+    remove_set
+    |> set.insert(2)
+    |> set.insert(3)
+
+  let result_set = set.difference(from_set, remove_set)
+
+  result_set
+  |> set.count()
+  |> should.equal(2)
+
+  result_set
+  |> set.contains(1)
+  |> should.equal(True)
+
+  result_set
+  |> set.contains(2)
+  |> should.equal(False)
+
+  result_set
+  |> set.contains(3)
+  |> should.equal(False)
+
+  result_set
+  |> set.contains(4)
+  |> should.equal(True)
+}

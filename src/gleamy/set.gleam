@@ -65,6 +65,12 @@ pub fn union(of first: Set(a), and second: Set(a)) -> Set(a) {
   tree.fold(first, second, fn(a, i) { tree.insert(a, i) })
 }
 
+/// Creates a new set containing the elements of the first set except for elements
+/// that are also in the second set.
+pub fn difference(from set: Set(a), remove removal: Set(a)) -> Set(a) {
+  tree.fold(removal, set, fn(set, i) { tree.delete(set, i) })
+}
+
 /// Returns the number of elements in the set.
 /// Time complexity: O(n)
 pub fn count(set: Set(a)) -> Int {
