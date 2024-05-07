@@ -63,7 +63,7 @@ Sets are used to store a collection of items. Items are compared with a user-pro
 This is a wrapper around `red_black_tree_set` providing additional utility functions. 
 
 
-`gleamy/red_black_tree_map`:
+`gleamy/red_black_tree_set`:
 
 A set based on a red-black balanced tree structure.
 
