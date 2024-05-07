@@ -1,3 +1,9 @@
+//// This module provides an implementation of a red-black tree map, a self-balancing
+//// binary search tree data structure that maintains a balanced shape which ensures
+//// tree operations stay efficient.
+//// It associates keys with values, where each key is unique and ordered according
+//// to the comparison function.
+
 // Based on "Deletion: The curse of the red-black tree" by Germane (2014)
 
 import gleam/order.{type Order, Eq, Gt, Lt}
@@ -11,38 +17,60 @@ type Color {
 type Node(k, v) {
   E
   EE
+  // TODO try flattening the k, v, pair into the tuple -- benchmark!
   T(c: Color, l: Node(k, v), k: #(k, v), r: Node(k, v))
 }
 
-pub opaque type Tree(k, v) {
-  Tree(root: Node(k, v), compare: fn(k, k) -> Order)
+pub opaque type Map(k, v) {
+  Map(root: Node(k, v), compare: fn(k, k) -> Order)
 }
 
-pub fn new(compare: fn(k, k) -> Order) -> Tree(k, v) {
-  Tree(E, compare)
+/// Creates a new empty map with the provided comparison function for keys.
+pub fn new(compare: fn(k, k) -> Order) -> Map(k, v) {
+  Map(E, compare)
 }
 
-pub fn clear(tree: Tree(k, v)) -> Tree(k, v) {
-  Tree(E, tree.compare)
+/// Removes all elements from the map, resulting in an empty map.
+/// Time complexity: O(1)
+pub fn clear(tree: Map(k, v)) -> Map(k, v) {
+  Map(E, tree.compare)
 }
 
-pub fn insert(tree: Tree(k, v), key: k, value: v) -> Tree(k, v) {
-  Tree(blacken(ins(tree.root, #(key, value), tree.compare)), tree.compare)
+// TODO is this O(1) amortised?
+/// Inserts a new key-value pair into the map.
+/// If the key already exists, its associated value is updated with the new value.
+/// Time complexity: O(log n)
+pub fn insert(tree: Map(k, v), key: k, value: v) -> Map(k, v) {
+  Map(blacken(ins(tree.root, #(key, value), tree.compare)), tree.compare)
 }
 
-pub fn delete(tree: Tree(k, v), key: k) -> Tree(k, v) {
-  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
+// TODO is this O(1) amortised?
+/// Removes a key-value pair from the map, if the key exists.
+/// Time complexity: O(log n)
+pub fn delete(tree: Map(k, v), key: k) -> Map(k, v) {
+  Map(del(redden(tree.root), key, tree.compare), tree.compare)
 }
 
-pub fn find(tree: Tree(k, v), key: k) -> Result(#(k, v), Nil) {
-  do_find(tree.root, key, tree.compare)
+/// Searches for a key in the map and returns the associated value if found.
+/// Time complexity: O(log n)
+pub fn find(tree: Map(k, v), key: k) -> Result(v, Nil) {
+  case do_find(tree.root, key, tree.compare) {
+    Ok(entry) -> Ok(entry.1)
+    _ -> Error(Nil)
+  }
 }
 
-pub fn fold(tree: Tree(k, v), acc: b, fun: fn(b, k, v) -> b) -> b {
+/// Applies a function to every key-value pair in the map, accumulating
+/// the results with the provided initial accumulator value.
+/// Time complexity: O(n)
+pub fn fold(tree: Map(k, v), acc: b, fun: fn(b, k, v) -> b) -> b {
   do_fold(tree.root, acc, fun)
 }
 
-pub fn foldr(tree: Tree(k, v), acc: b, fun: fn(b, k, v) -> b) -> b {
+/// Applies a function to every key-value pair in the map, accumulating
+/// the results with the provided initial accumulator value, but in reverse order.
+/// Time complexity: O(n)
+pub fn foldr(tree: Map(k, v), acc: b, fun: fn(b, k, v) -> b) -> b {
   do_foldr(tree.root, acc, fun)
 }
 

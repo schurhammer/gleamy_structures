@@ -1,3 +1,9 @@
+//// This module provides an implementation of a red-black tree set, a self-balancing
+//// binary search tree data structure that maintains a balanced shape which ensures
+//// tree operations stay efficient.
+//// This is an ordered set implementation, meaning the tree will contains values that
+//// are unique and ordered according to the comparison function.
+
 // Based on "Deletion: The curse of the red-black tree" by Germane (2014)
 
 import gleam/order.{type Order, Eq, Gt, Lt}
@@ -14,35 +20,52 @@ type Node(a) {
   T(c: Color, l: Node(a), k: a, r: Node(a))
 }
 
-pub opaque type Tree(a) {
-  Tree(root: Node(a), compare: fn(a, a) -> Order)
+pub opaque type Set(a) {
+  Set(root: Node(a), compare: fn(a, a) -> Order)
 }
 
-pub fn new(compare: fn(a, a) -> Order) -> Tree(a) {
-  Tree(E, compare)
+/// Creates a new empty set with the provided comparison function.
+pub fn new(compare: fn(a, a) -> Order) -> Set(a) {
+  Set(E, compare)
 }
 
-pub fn clear(tree: Tree(a)) -> Tree(a) {
-  Tree(E, tree.compare)
+/// Removes all elements from the set, resulting in an empty set.
+/// Time complexity: O(1)
+pub fn clear(tree: Set(a)) -> Set(a) {
+  Set(E, tree.compare)
 }
 
-pub fn insert(tree: Tree(a), key: a) -> Tree(a) {
-  Tree(blacken(ins(tree.root, key, tree.compare)), tree.compare)
+// TODO is this O(1) amortised?
+/// Inserts a new element into the set, preserving the set property (no duplicates).
+/// Time complexity: O(log n)
+pub fn insert(tree: Set(a), key: a) -> Set(a) {
+  Set(blacken(ins(tree.root, key, tree.compare)), tree.compare)
 }
 
-pub fn delete(tree: Tree(a), key: a) -> Tree(a) {
-  Tree(del(redden(tree.root), key, tree.compare), tree.compare)
+// TODO is this O(1) amortised?
+/// Removes an element from the set, if it exists.
+/// Time complexity: O(log n)
+pub fn delete(tree: Set(a), key: a) -> Set(a) {
+  Set(del(redden(tree.root), key, tree.compare), tree.compare)
 }
 
-pub fn find(tree: Tree(a), key: a) -> Result(a, Nil) {
+/// Searches for an element in the set and returns it if found.
+/// Time complexity: O(log n)
+pub fn find(tree: Set(a), key: a) -> Result(a, Nil) {
   do_find(tree.root, key, tree.compare)
 }
 
-pub fn fold(tree: Tree(a), acc: b, fun: fn(b, a) -> b) -> b {
+/// Applies a function to every element in the set, accumulating
+/// the results with the provided initial accumulator value.
+/// Time complexity: O(n)
+pub fn fold(tree: Set(a), acc: b, fun: fn(b, a) -> b) -> b {
   do_fold(tree.root, acc, fun)
 }
 
-pub fn foldr(tree: Tree(a), acc: b, fun: fn(b, a) -> b) -> b {
+/// Applies a function to every element in set, accumulating the results with
+/// the provided initial accumulator value, but in reverse order.
+/// Time complexity: O(n)
+pub fn foldr(tree: Set(a), acc: b, fun: fn(b, a) -> b) -> b {
   do_foldr(tree.root, acc, fun)
 }
 

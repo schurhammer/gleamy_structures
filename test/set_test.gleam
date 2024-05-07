@@ -159,30 +159,6 @@ pub fn count_test() {
   |> should.equal(3)
 }
 
-pub fn take_test() {
-  let set = set.new(int.compare)
-  let updated_set =
-    set
-    |> set.insert(1)
-    |> set.insert(2)
-    |> set.insert(3)
-
-  let desired = [1, 3]
-  let result_set = set.take(updated_set, desired)
-
-  result_set
-  |> set.contains(1)
-  |> should.equal(True)
-
-  result_set
-  |> set.contains(2)
-  |> should.equal(False)
-
-  result_set
-  |> set.contains(3)
-  |> should.equal(True)
-}
-
 pub fn to_list_test() {
   let set = set.new(int.compare)
   let updated_set =

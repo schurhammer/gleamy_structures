@@ -11,11 +11,11 @@ pub fn insert_and_find_test() {
 
   updated_map
   |> map.find("key1")
-  |> should.equal(Ok(#("key1", "value1")))
+  |> should.equal(Ok("value1"))
 
   updated_map
   |> map.find("key2")
-  |> should.equal(Ok(#("key2", "value2")))
+  |> should.equal(Ok("value2"))
 }
 
 pub fn delete_test() {
@@ -34,7 +34,7 @@ pub fn delete_test() {
 
   updated_map
   |> map.find("key2")
-  |> should.equal(Ok(#("key2", "value2")))
+  |> should.equal(Ok("value2"))
 }
 
 pub fn fold_test() {

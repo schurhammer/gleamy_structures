@@ -9,11 +9,11 @@ Data structures in pure Gleam.
 
 ### Priority Queue
 
-
 `gleamy/priority_queue`:
 
-This priority queue is a wrapper around `gleamy/pairing_heap` ,providing additional functionality. The priority is comparison based in ascending order (lowest priority first).
+This priority queue is a wrapper around `gleamy/pairing_heap`, providing additional functionality. The priority is comparison based in ascending order (lowest value first).
 
+You may use the pairing heap or other heap structures directly for much of the same functionality.
 
 ### Heap
 

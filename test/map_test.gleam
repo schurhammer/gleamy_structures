@@ -11,12 +11,12 @@ pub fn insert_and_find_test() {
     |> map.insert("key2", "value2")
 
   updated_map
-  |> map.find("key1")
-  |> should.equal(Ok(#("key1", "value1")))
+  |> map.get("key1")
+  |> should.equal(Ok("value1"))
 
   updated_map
-  |> map.find("key2")
-  |> should.equal(Ok(#("key2", "value2")))
+  |> map.get("key2")
+  |> should.equal(Ok("value2"))
 }
 
 pub fn has_key_test() {
@@ -100,10 +100,11 @@ pub fn merge_test() {
   let map1 =
     map.new(string.compare)
     |> map.insert("key1", "value1")
-    |> map.insert("key2", "value2")
+    |> map.insert("key2", "value2-map1")
 
   let map2 =
     map.new(string.compare)
+    |> map.insert("key2", "value2-map2")
     |> map.insert("key3", "value3")
     |> map.insert("key4", "value4")
 
@@ -112,6 +113,10 @@ pub fn merge_test() {
   merged_map
   |> map.count
   |> should.equal(4)
+
+  merged_map
+  |> map.get("key2")
+  |> should.equal(Ok("value2-map2"))
 }
 
 pub fn take_test() {
@@ -151,7 +156,7 @@ pub fn missing_keys_test() {
     |> map.insert("key2", "value2")
 
   map
-  |> map.find("key3")
+  |> map.get("key3")
   |> should.equal(Error(Nil))
 
   let updated_map =
@@ -173,16 +178,16 @@ pub fn from_list_test() {
   |> should.equal(3)
 
   map
-  |> map.find("key1")
-  |> should.equal(Ok(#("key1", "value1")))
+  |> map.get("key1")
+  |> should.equal(Ok("value1"))
 
   map
-  |> map.find("key2")
-  |> should.equal(Ok(#("key2", "value2")))
+  |> map.get("key2")
+  |> should.equal(Ok("value2"))
 
   map
-  |> map.find("key3")
-  |> should.equal(Ok(#("key3", "value3")))
+  |> map.get("key3")
+  |> should.equal(Ok("value3"))
 }
 
 pub fn to_list_test() {
