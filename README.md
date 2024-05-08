@@ -85,6 +85,12 @@ This is a wrapper around `red_black_tree_set` providing additional utility funct
 
 A set based on a red-black balanced tree structure.
 
+### Planned Structures
+
+- graph
+- quadtree
+- array
+
 ## Installation
 
 This package can be added to your Gleam project:
