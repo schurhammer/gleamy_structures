@@ -1,5 +1,5 @@
 name = "gleamy_structures"
-version = "1.0.0"
+version = "1.1.0"
 
 licences = ["Apache-2.0"]
 description = "Data structures in pure Gleam! Including tree, heap, non empty list, map, set, and priority queue."
@@ -10,4 +10,5 @@ links = [{ title = "Website", href = "https://github.com/schurhammer/gleamy_stru
 gleam_stdlib = "~> 0.37 or ~> 1.0"
 
 [dev-dependencies]
+gleamy_bench = ">= 0.4.0 and < 1.0.0"
 gleeunit = "~> 1.0"

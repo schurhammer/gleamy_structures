@@ -60,6 +60,24 @@ pub fn find(tree: Map(k, v), key: k) -> Result(v, Nil) {
   }
 }
 
+// Find the smallest key that is larger than the given key.
+/// Time complexity: O(log n)
+pub fn larger(tree: Map(k, v), key: k) -> Result(#(k, v), Nil) {
+  case do_larger(tree.root, key, tree.compare) {
+    Ok(entry) -> Ok(entry)
+    _ -> Error(Nil)
+  }
+}
+
+// Find the largest key that is smaller than the given key.
+/// Time complexity: O(log n)
+pub fn smaller(tree: Map(k, v), key: k) -> Result(#(k, v), Nil) {
+  case do_smaller(tree.root, key, tree.compare) {
+    Ok(entry) -> Ok(entry)
+    _ -> Error(Nil)
+  }
+}
+
 /// Applies a function to every key-value pair in the map, accumulating
 /// the results with the provided initial accumulator value.
 /// Time complexity: O(n)
@@ -203,6 +221,44 @@ fn do_find(
         Lt -> do_find(l, key, compare)
         Gt -> do_find(r, key, compare)
         Eq -> Ok(k)
+      }
+    _ -> Error(Nil)
+  }
+}
+
+fn do_larger(
+  node: Node(k, v),
+  key: k,
+  compare: fn(k, k) -> Order,
+) -> Result(#(k, v), Nil) {
+  case node {
+    T(_, l, k, r) ->
+      case compare(key, k.0) {
+        Lt ->
+          case do_larger(l, key, compare) {
+            Ok(x) -> Ok(x)
+            _ -> Ok(k)
+          }
+        _ -> do_larger(r, key, compare)
+      }
+    _ -> Error(Nil)
+  }
+}
+
+fn do_smaller(
+  node: Node(k, v),
+  key: k,
+  compare: fn(k, k) -> Order,
+) -> Result(#(k, v), Nil) {
+  case node {
+    T(_, l, k, r) ->
+      case compare(key, k.0) {
+        Gt ->
+          case do_smaller(r, key, compare) {
+            Ok(x) -> Ok(x)
+            _ -> Ok(k)
+          }
+        _ -> do_smaller(l, key, compare)
       }
     _ -> Error(Nil)
   }
