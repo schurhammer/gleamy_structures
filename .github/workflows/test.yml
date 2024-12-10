@@ -1,23 +1,17 @@
 name: test
 
-on:
-  push:
-    branches:
-      - master
-      - main
-  pull_request:
+on: push
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.2.0
-      - uses: erlef/setup-beam@v1.15.0
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
         with:
-          otp-version: "27.1"
-          gleam-version: "1.6.3"
-          rebar3-version: "3"
-          # elixir-version: "1.14.2"
+          otp-version: '27'
+          gleam-version: '1.5.1'
+          rebar3-version: '3'
       - run: gleam format --check src test
       - run: gleam deps download
       - run: gleam test
