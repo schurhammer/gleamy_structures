@@ -60,7 +60,7 @@ pub fn find(tree: Map(k, v), key: k) -> Result(v, Nil) {
   }
 }
 
-// Find the smallest key that is larger than the given key.
+/// Find the smallest key that is larger than the given key.
 /// Time complexity: O(log n)
 pub fn larger(tree: Map(k, v), key: k) -> Result(#(k, v), Nil) {
   case do_larger(tree.root, key, tree.compare) {
@@ -69,7 +69,7 @@ pub fn larger(tree: Map(k, v), key: k) -> Result(#(k, v), Nil) {
   }
 }
 
-// Find the largest key that is smaller than the given key.
+/// Find the largest key that is smaller than the given key.
 /// Time complexity: O(log n)
 pub fn smaller(tree: Map(k, v), key: k) -> Result(#(k, v), Nil) {
   case do_smaller(tree.root, key, tree.compare) {
