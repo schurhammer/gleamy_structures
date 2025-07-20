@@ -33,48 +33,15 @@ pub fn to_list(bimap: Bimap(a, b)) -> List(#(a, b)) {
 /// Insert a new key-value pair into the bimap. If either the key or value
 /// already exists, the existing pair is removed before inserting the new one.
 pub fn insert(bimap: Bimap(a, b), key: a, value: b) -> Bimap(a, b) {
-  let key_exists = dict.has_key(bimap.from_key, key)
-  let value_exists = dict.has_key(bimap.to_key, value)
+  let cleaned =
+    bimap
+    |> delete_by_key(key)
+    |> delete_by_value(value)
 
-  case key_exists, value_exists {
-    // The key and value already exist
-    True, True -> {
-      let cleaned =
-        bimap
-        |> delete_by_key(key)
-        |> delete_by_value(value)
-
-      Bimap(
-        from_key: dict.insert(cleaned.from_key, key, value),
-        to_key: dict.insert(cleaned.to_key, value, key),
-      )
-    }
-
-    // The key exists by the value does not
-    True, False -> {
-      let cleaned = delete_by_key(bimap, key)
-      Bimap(
-        from_key: dict.insert(cleaned.from_key, key, value),
-        to_key: dict.insert(cleaned.to_key, value, key),
-      )
-    }
-
-    // The value exists by the key does not
-    False, True -> {
-      let cleaned = delete_by_value(bimap, value)
-      Bimap(
-        from_key: dict.insert(cleaned.from_key, key, value),
-        to_key: dict.insert(cleaned.to_key, value, key),
-      )
-    }
-
-    // Neither exists in the bimap already
-    False, False ->
-      Bimap(
-        from_key: dict.insert(bimap.from_key, key, value),
-        to_key: dict.insert(bimap.to_key, value, key),
-      )
-  }
+  Bimap(
+    from_key: dict.insert(cleaned.from_key, key, value),
+    to_key: dict.insert(cleaned.to_key, value, key),
+  )
 }
 
 /// Get a value by its key, if present.
