@@ -7,6 +7,13 @@ Data structures in pure Gleam.
 
 ## Supported Structures
 
+- Map
+- Set
+- Heap
+- Non-Empty List
+- Priority Queue
+- Bidirectional Map
+
 ### Priority Queue
 
 `gleamy/priority_queue`:
@@ -85,11 +92,18 @@ This is a wrapper around `red_black_tree_set` providing additional utility funct
 
 A set based on a red-black balanced tree structure.
 
+### Bidirectional Map
+
+`gleamy/bimap`
+
+Each key can have a single value, and each value can have a single key.
+Ordering is not guaranteed.
+
 ### Planned Structures
 
 - graph
 - quadtree
-- array
+- array (use the `iv` package!)
 
 ## Installation
 
