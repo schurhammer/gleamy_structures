@@ -8,8 +8,11 @@ import gleamy/map
 pub fn main() {
   bench.run(
     [
-      bench.Input("n=3", list.range(1, 3)),
-      bench.Input("n=1000", list.range(1, 1000)),
+      bench.Input("n=3", int.range(from: 3, to: 0, with: [], run: list.prepend)),
+      bench.Input(
+        "n=1000",
+        int.range(from: 1000, to: 0, with: [], run: list.prepend),
+      ),
     ],
     [
       bench.Function("map", fn(data) {
