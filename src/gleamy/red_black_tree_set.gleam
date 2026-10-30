@@ -223,9 +223,3 @@ fn do_foldr(node, acc, fun) {
   }
 }
 
-fn do_indent(acc, i) {
-  case i {
-    0 -> acc
-    i -> do_indent(".  " <> acc, i - 1)
-  }
-}
