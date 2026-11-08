@@ -288,9 +288,3 @@ fn do_foldr(node: Node(k, v), acc: a, fun: fn(a, k, v) -> a) -> a {
   }
 }
 
-fn do_indent(acc: String, i: Int) -> String {
-  case i {
-    0 -> acc
-    i -> do_indent(".  " <> acc, i - 1)
-  }
-}
