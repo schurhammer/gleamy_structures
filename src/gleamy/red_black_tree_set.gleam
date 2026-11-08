@@ -222,4 +222,3 @@ fn do_foldr(node, acc, fun) {
     _ -> acc
   }
 }
-

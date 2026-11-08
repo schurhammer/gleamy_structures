@@ -57,7 +57,11 @@ pub fn merge(heap1: Heap(a), heap2: Heap(a)) -> Heap(a) {
   Heap(merge_trees(heap1.root, heap2.root, compare), compare)
 }
 
-fn merge_trees(h1: Tree(a), h2: Tree(a), compare: fn(a, a) -> Order) -> Tree(a) {
+fn merge_trees(
+  h1: Tree(a),
+  h2: Tree(a),
+  compare: fn(a, a) -> Order,
+) -> Tree(a) {
   case h1, h2 {
     h, Empty -> h
     Empty, h -> h

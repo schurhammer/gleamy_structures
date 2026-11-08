@@ -287,4 +287,3 @@ fn do_foldr(node: Node(k, v), acc: a, fun: fn(a, k, v) -> a) -> a {
     _ -> acc
   }
 }
-

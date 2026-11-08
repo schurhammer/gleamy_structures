@@ -46,7 +46,11 @@ pub fn filter(in set: Set(a), for property: fn(a) -> Bool) -> Set(a) {
 
 /// Applies a function to every element in the set, accumulating
 /// the results with the provided initial accumulator value.
-pub fn fold(over set: Set(a), from initial: b, with reducer: fn(b, a) -> b) -> b {
+pub fn fold(
+  over set: Set(a),
+  from initial: b,
+  with reducer: fn(b, a) -> b,
+) -> b {
   tree.fold(set, initial, reducer)
 }
 
